@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>
+      Student Portal | Student Report System
+    </title>
+    <link rel="stylesheet" href="student.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">
+          SR
+        </span>
+        <div>
+          <strong>
+            Student Report System
+          </strong>
+          <small>
+            Student Portal
+          </small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle">
+          🌙
+        </button>
+        <span class="user-chip" id="studentName">
+        </span>
+        <button class="danger-btn" onclick="logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="side-title">
+          MY ACADEMICS
+        </div>
+        <button class="nav-btn active" data-section="dashboard">
+          ▦
+          <span>
+            Overview
+          </span>
+        </button>
+        <button class="nav-btn" data-section="reports">
+          ▤
+          <span>
+            Report Card
+          </span>
+        </button>
+        <button class="nav-btn" data-section="profile">
+          ♙
+          <span>
+            My Profile
+          </span>
+        </button>
+      </aside>
+      <main class="content">
+        <section id="dashboard" class="page-section">
+          <div class="hero-card">
+            <div>
+              <span class="eyebrow">
+                STUDENT OVERVIEW
+              </span>
+              <h1>
+                Welcome,
+                <span id="welcomeName">
+                </span>
+                ✨
+              </h1>
+              <p id="welcomeMeta">
+              </p>
+            </div>
+            <div class="hero-score">
+              <span>
+                Overall Grade
+              </span>
+              <strong id="overallGrade">
+                —
+              </strong>
+              <small id="overallGpa">
+                GPA —
+              </small>
+            </div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card purple">
+              <span>
+                Subjects
+              </span>
+              <strong id="subjectCount">
+                0
+              </strong>
+              <small>
+                Reported subjects
+              </small>
+            </div>
+            <div class="stat-card cyan">
+              <span>
+                Average Marks
+              </span>
+              <strong id="averageMarks">
+                0%
+              </strong>
+              <small>
+                Overall performance
+              </small>
+            </div>
+            <div class="stat-card green">
+              <span>
+                Attendance
+              </span>
+              <strong id="averageAttendance">
+                0%
+              </strong>
+              <small>
+                Across subjects
+              </small>
+            </div>
+            <div class="stat-card orange">
+              <span>
+                Pass Rate
+              </span>
+              <strong id="passRate">
+                0%
+              </strong>
+              <small>
+                Successful reports
+              </small>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>
+                  Performance Progress
+                </h2>
+                <p>
+                  Subject-wise marks and attendance at a glance.
+                </p>
+              </div>
+            </div>
+            <div id="progressList" class="progress-list">
+            </div>
+          </div>
+        </section>
+        <section id="reports" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                DIGITAL REPORT CARD
+              </span>
+              <h1>
+                My Academic Reports
+              </h1>
+              <p>
+                Detailed subject-wise marks, attendance and teacher feedback.
+              </p>
+            </div>
+            <button class="primary-btn" onclick="printReport()">
+              🖨 Print / Save PDF
+            </button>
+          </div>
+          <div class="report-summary">
+            <div>
+              <span>
+                Student
+              </span>
+              <strong id="reportStudent">
+              </strong>
+            </div>
+            <div>
+              <span>
+                Class
+              </span>
+              <strong id="reportClass">
+              </strong>
+            </div>
+            <div>
+              <span>
+                GPA
+              </span>
+              <strong id="reportGpa">
+              </strong>
+            </div>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Subject
+                  </th>
+                  <th>
+                    Test / 40
+                  </th>
+                  <th>
+                    Exam / 60
+                  </th>
+                  <th>
+                    Total
+                  </th>
+                  <th>
+                    Grade
+                  </th>
+                  <th>
+                    Attendance
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                  <th>
+                    Teacher Remarks
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="reportsTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="profile" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                PERSONAL DETAILS
+              </span>
+              <h1>
+                My Profile
+              </h1>
+              <p>
+                Your registered academic identity.
+              </p>
+            </div>
+          </div>
+          <div class="profile-card">
+            <div class="avatar" id="avatar">
+            </div>
+            <div class="profile-info">
+              <h2 id="profileName">
+              </h2>
+              <p id="profileEmail">
+              </p>
+              <div class="profile-grid">
+                <div>
+                  <span>
+                    Role
+                  </span>
+                  <strong>
+                    Student
+                  </strong>
+                </div>
+                <div>
+                  <span>
+                    Student ID
+                  </span>
+                  <strong id="profileId">
+                    —
+                  </strong>
+                </div>
+                <div>
+                  <span>
+                    Class / Section
+                  </span>
+                  <strong id="profileClass">
+                    —
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="student.js">
+    </script>
+  </body>
+</html>

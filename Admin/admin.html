@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>
+      Admin Portal | Student Report System
+    </title>
+    <link rel="stylesheet" href="admin.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">
+          SR
+        </span>
+        <div>
+          <strong>
+            Student Report System
+          </strong>
+          <small>
+            Admin Portal
+          </small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle">
+          🌙
+        </button>
+        <span class="user-chip" id="adminName">
+        </span>
+        <button class="danger-btn" onclick="logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="side-title">
+          CONTROL CENTER
+        </div>
+        <button class="nav-btn active" data-section="dashboard">
+          ▦
+          <span>
+            Dashboard
+          </span>
+        </button>
+        <button class="nav-btn" data-section="users">
+          ♙
+          <span>
+            User Management
+          </span>
+        </button>
+        <button class="nav-btn" data-section="mapping">
+          ⌘
+          <span>
+            Class & Subject
+          </span>
+        </button>
+        <button class="nav-btn" data-section="reports">
+          ▤
+          <span>
+            Reports
+          </span>
+        </button>
+        <button class="nav-btn" data-section="settings">
+          ⚙
+          <span>
+            Grading Policy
+          </span>
+        </button>
+      </aside>
+      <main class="content">
+        <section id="dashboard" class="page-section">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                OVERVIEW
+              </span>
+              <h1>
+                Good to see you,
+                <span id="dashName">
+                  Admin
+                </span>
+                👋
+              </h1>
+              <p>
+                Monitor the academic system from one place.
+              </p>
+            </div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card purple">
+              <span>
+                Total Users
+              </span>
+              <strong id="totalUsers">
+                0
+              </strong>
+              <small>
+                All registered accounts
+              </small>
+            </div>
+            <div class="stat-card cyan">
+              <span>
+                Students
+              </span>
+              <strong id="totalStudents">
+                0
+              </strong>
+              <small>
+                Active student profiles
+              </small>
+            </div>
+            <div class="stat-card orange">
+              <span>
+                Teachers
+              </span>
+              <strong id="totalTeachers">
+                0
+              </strong>
+              <small>
+                Teaching accounts
+              </small>
+            </div>
+            <div class="stat-card green">
+              <span>
+                Class Average
+              </span>
+              <strong id="classAverage">
+                0%
+              </strong>
+              <small>
+                Across all reports
+              </small>
+            </div>
+          </div>
+          <div class="panel-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>
+                    Recent Reports
+                  </h2>
+                  <p>
+                    Latest teacher submissions
+                  </p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        Student
+                      </th>
+                      <th>
+                        Subject
+                      </th>
+                      <th>
+                        Marks
+                      </th>
+                      <th>
+                        Grade
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentReports">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>
+                    System Snapshot
+                  </h2>
+                  <p>
+                    Live localStorage data
+                  </p>
+                </div>
+              </div>
+              <div id="snapshot" class="snapshot">
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="users" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                PEOPLE
+              </span>
+              <h1>
+                User Management
+              </h1>
+              <p>
+                Create, edit, view and remove student or teacher profiles.
+              </p>
+            </div>
+            <button class="primary-btn" onclick="openUserModal()">
+              ＋ Add User
+            </button>
+          </div>
+          <div class="toolbar">
+            <input id="userSearch" placeholder="Search by name or email…">
+            <select id="userRoleFilter">
+              <option value="all">
+                All roles
+              </option>
+              <option value="student">
+                Students
+              </option>
+              <option value="teacher">
+                Teachers
+              </option>
+            </select>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Role
+                  </th>
+                  <th>
+                    Class / ID
+                  </th>
+                  <th>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="usersTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="mapping" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                ACADEMICS
+              </span>
+              <h1>
+                Class & Subject Mapping
+              </h1>
+              <p>
+                Assign teachers to classes and subjects.
+              </p>
+            </div>
+          </div>
+          <div class="panel form-panel">
+            <form id="mappingForm" class="form-grid">
+              <label>
+                Teacher
+                <select id="mapTeacher" required>
+                </select>
+              </label>
+              <label>
+                Class / Section
+                <input id="mapClass" placeholder="e.g. B.Tech CSE-A" required>
+              </label>
+              <label>
+                Subject
+                <input id="mapSubject" placeholder="e.g. Data Structures" required>
+              </label>
+              <button class="primary-btn" type="submit">
+                Save Assignment
+              </button>
+            </form>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Teacher
+                  </th>
+                  <th>
+                    Class
+                  </th>
+                  <th>
+                    Subject
+                  </th>
+                  <th>
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="mappingTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="reports" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                ACADEMIC DATA
+              </span>
+              <h1>
+                Student Reports
+              </h1>
+              <p>
+                Review all submitted performance records.
+              </p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <input id="reportSearch" placeholder="Search student or subject…">
+            <select id="reportResultFilter">
+              <option value="all">
+                All results
+              </option>
+              <option>
+                Pass
+              </option>
+              <option>
+                Fail
+              </option>
+            </select>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Student
+                  </th>
+                  <th>
+                    Subject
+                  </th>
+                  <th>
+                    Marks
+                  </th>
+                  <th>
+                    Attendance
+                  </th>
+                  <th>
+                    Grade
+                  </th>
+                  <th>
+                    Result
+                  </th>
+                  <th>
+                    Teacher
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="reportsTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="settings" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                CONFIGURATION
+              </span>
+              <h1>
+                Grading Policy
+              </h1>
+              <p>
+                Set percentage thresholds used for automatic grade calculation.
+              </p>
+            </div>
+          </div>
+          <div class="panel form-panel">
+            <form id="settingsForm">
+              <div class="form-grid">
+                <label>
+                  Pass mark (%)
+                  <input type="number" id="passMark" min="0" max="100" required>
+                </label>
+              </div>
+              <div id="gradeInputs" class="grade-grid">
+              </div>
+              <button class="primary-btn" type="submit">
+                Save Grading Policy
+              </button>
+              <p id="settingsMessage" class="message">
+              </p>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div id="userModal" class="modal hidden">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeUserModal()">
+          ×
+        </button>
+        <span class="eyebrow">
+          PROFILE
+        </span>
+        <h2 id="modalTitle">
+          Add User
+        </h2>
+        <form id="userForm">
+          <input type="hidden" id="editId">
+          <div class="form-grid">
+            <label>
+              Full name
+              <input id="userName" required>
+            </label>
+            <label>
+              Email
+              <input type="email" id="userEmail" required>
+            </label>
+            <label>
+              Password
+              <input id="userPassword" type="text" placeholder="Required for new users">
+            </label>
+            <label>
+              Role
+              <select id="userRole" required>
+                <option value="student">
+                  Student
+                </option>
+                <option value="teacher">
+                  Teacher
+                </option>
+              </select>
+            </label>
+            <label>
+              Class / Section
+              <input id="userClass">
+            </label>
+            <label>
+              Student ID
+              <input id="userStudentId">
+            </label>
+          </div>
+          <button class="primary-btn" type="submit">
+            Save User
+          </button>
+          <p id="userMessage" class="message">
+          </p>
+        </form>
+      </div>
+    </div>
+    <script src="admin.js">
+    </script>
+  </body>
+</html>

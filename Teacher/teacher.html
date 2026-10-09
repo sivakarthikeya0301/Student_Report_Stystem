@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>
+      Teacher Portal | Student Report System
+    </title>
+    <link rel="stylesheet" href="teacher.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">
+          SR
+        </span>
+        <div>
+          <strong>
+            Student Report System
+          </strong>
+          <small>
+            Teacher Portal
+          </small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeToggle">
+          🌙
+        </button>
+        <span class="user-chip" id="teacherName">
+        </span>
+        <button class="danger-btn" onclick="logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="side-title">
+          TEACHER WORKSPACE
+        </div>
+        <button class="nav-btn active" data-section="dashboard">
+          ▦
+          <span>
+            Dashboard
+          </span>
+        </button>
+        <button class="nav-btn" data-section="roster">
+          ♙
+          <span>
+            Class Roster
+          </span>
+        </button>
+        <button class="nav-btn" data-section="addReport">
+          ✎
+          <span>
+            Marks & Attendance
+          </span>
+        </button>
+        <button class="nav-btn" data-section="reports">
+          ▤
+          <span>
+            My Reports
+          </span>
+        </button>
+      </aside>
+      <main class="content">
+        <section id="dashboard" class="page-section">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                TEACHING HUB
+              </span>
+              <h1>
+                Welcome,
+                <span id="dashName">
+                </span>
+                👋
+              </h1>
+              <p>
+                Track your classes and student performance.
+              </p>
+            </div>
+            <button class="primary-btn" onclick="showSection('addReport')">
+              ＋ New Report
+            </button>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card purple">
+              <span>
+                Assigned Classes
+              </span>
+              <strong id="classCount">
+                0
+              </strong>
+              <small>
+                Your mapped classes
+              </small>
+            </div>
+            <div class="stat-card cyan">
+              <span>
+                Students
+              </span>
+              <strong id="studentCount">
+                0
+              </strong>
+              <small>
+                Across assigned classes
+              </small>
+            </div>
+            <div class="stat-card orange">
+              <span>
+                Reports
+              </span>
+              <strong id="reportCount">
+                0
+              </strong>
+              <small>
+                Submitted by you
+              </small>
+            </div>
+            <div class="stat-card green">
+              <span>
+                Average Marks
+              </span>
+              <strong id="avgMarks">
+                0%
+              </strong>
+              <small>
+                Your report average
+              </small>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>
+                Assigned Teaching Load
+              </h2>
+              <p>
+                Classes and subjects mapped by the administrator.
+              </p>
+            </div>
+            <div id="assignmentCards" class="assignment-grid">
+            </div>
+          </div>
+        </section>
+        <section id="roster" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                STUDENTS
+              </span>
+              <h1>
+                Class Roster
+              </h1>
+              <p>
+                Select an assigned class to see enrolled students.
+              </p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <select id="rosterClass">
+            </select>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Student
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Student ID
+                  </th>
+                  <th>
+                    Class
+                  </th>
+                  <th>
+                    Latest Grade
+                  </th>
+                  <th>
+                    Latest Attendance
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="rosterTable">
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="addReport" class="page-section hidden">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">
+                ASSESSMENT
+              </span>
+              <h1>
+                Marks, Attendance & Feedback
+              </h1>
+              <p>
+                Enter test/exam marks and attendance for a student.
+              </p>
+            </div>
+          </div>
+          <div class="panel form-panel">
+            <form id="reportForm">
+              <div class="form-grid">
+                <label>
+                  Student
+                  <select id="student" required>
+                  </select>
+                </label>
+                <label>
+                  Class / Section
+                  <input id="reportClass" readonly>
+                </label>
+                <label>
+                  Subject
+                  <input id="subject" placeholder="e.g. Data Structures" required>
+                </label>
+                <label>
+                  Test / Internal Marks (40)
+                  <input type="number" id="testMarks" min="0" max="40" value="0" required>
+                </label>
+                <label>
+                  Exam Marks (60)
+                  <input type="number" id="examMarks" min="0" max="60" value="0" required>
+                </label>
+                <label>
+                  Total / Percentage
+                  <input type="number" id="totalMarks" readonly>
+                </label>
+                <label>
+                  Attendance (%)
+                  <input type="number" id="attendance" min="0" max="100" placeholder="0 - 100" required>
+                </label>
+                <label>
+                  Attendance Status
+                  <select id="attendanceStatus">
+                    <option>
+                      Present
+                    </option>
+                    <option>
+                      Late
+                    </option>
+                    <option>
+                      Absent
+                    </option>
+                  </select>
+                </label>
+                <label class="full">
+                  Teacher Remarks
+                  <textarea id="remarks" rows="4" placeholder="Add feedback or conduct remarks…">
+                </textarea>
+              </label>
+            </div>
+            <div class="live-grade">
+              <span>
+                Live grade
+              </span>
+              <strong id="liveGrade">
+                F
+              </strong>
+              <small id="liveResult">
+                Fail
+              </small>
+            </div>
+            <button class="primary-btn" type="submit">
+              Save Student Report
+            </button>
+            <p id="formMessage" class="message">
+            </p>
+          </form>
+        </div>
+      </section>
+      <section id="reports" class="page-section hidden">
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">
+              SUBMISSIONS
+            </span>
+            <h1>
+              My Reports
+            </h1>
+            <p>
+              Review and edit the reports you submitted.
+            </p>
+          </div>
+        </div>
+        <div class="toolbar">
+          <input id="reportSearch" placeholder="Search student or subject…">
+          <select id="reportFilter">
+            <option value="all">
+              All results
+            </option>
+            <option>
+              Pass
+            </option>
+            <option>
+              Fail
+            </option>
+          </select>
+        </div>
+        <div class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Student
+                </th>
+                <th>
+                  Subject
+                </th>
+                <th>
+                  Test
+                </th>
+                <th>
+                  Exam
+                </th>
+                <th>
+                  Total
+                </th>
+                <th>
+                  Attendance
+                </th>
+                <th>
+                  Grade
+                </th>
+                <th>
+                  Result
+                </th>
+                <th>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody id="reportsTable">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="teacher.js">
+  </script>
+</body>
+</html>
